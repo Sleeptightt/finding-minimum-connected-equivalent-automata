@@ -6,31 +6,42 @@ import java.util.Map;
 
 public class PartitionAlgorithm {
 
+    private UnionFind partitions;
+
     public void MealyPartition(MealyMachine machine){
+        int numberOfStates = machine.getNumberOfStates();
+        partitions = new UnionFind(numberOfStates);
+        MealyState[] states = machine.getStates();
         for(int i = 0; i < numberOfStates; i++){
             for(int j = i+1; j<numberOfStates; j++){
                 if(states[i].equals(states[j]))
                     partitions.join(i,j);
             }
         }
-        partition();
+        partition(machine);
     }
 
-    public ArrayList<Integer>[] partition(){
+    public ArrayList<Integer>[] partition(MealyMachine machine){
+        int numberOfStates = machine.getNumberOfStates();
         ArrayList<Integer>[] finalPartitions;
-
-        UnionFind lastIteration = partitions;
         while(true){
+            UnionFind lastIteration = partitions;
+            partitions = new UnionFind(numberOfStates);
             for(int i = 0; i < numberOfStates; i++){
                 for(int j = i+1; j<numberOfStates; j++){
                     if(lastIteration.find(i) == lastIteration.find(j)){
-
+                        int inputAlphabetSize = machine.getInputAlphabetSize();
+                        for(int k = 0; k < inputAlphabetSize; k++){
+                            int firstTransition = machine.getStates()[i].getTransition(k);
+                            int secondTransition = machine.getStates()[j].getTransition(k);
+                        }
                     }
                 }
             }
 
-            if(lastIteration == partitions)
+            if(lastIteration == partitions) {
                 break;
+            }
         }
 
         finalPartitions = new ArrayList[partitions.getNumberOfComponents()];

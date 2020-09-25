@@ -29,6 +29,15 @@ public class MealyMachine {
 
     }
 
+    public int getNumberOfStates(){
+        return this.numberOfStates;
+    }
+    public MealyState[] getStates(){
+        return this.states;
+    }
 
 
+    public int getInputAlphabetSize() {
+        return this.inputAlphabetSize;
+    }
 }
