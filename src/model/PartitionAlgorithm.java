@@ -8,6 +8,8 @@ public class PartitionAlgorithm {
 
     private UnionFind partitions;
 
+    public PartitionAlgorithm(){}
+
     public void MealyPartition(MealyMachine machine){
         int numberOfStates = machine.getNumberOfStates();
         partitions = new UnionFind(numberOfStates);

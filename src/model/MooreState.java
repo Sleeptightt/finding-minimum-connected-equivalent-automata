@@ -1,11 +1,10 @@
 package model;
 
-public class MealyState {
-
+public class MooreState {
     private int transitionFunction[];
     private int outputFunction[];
 
-    public MealyState(int inputAlphabetSize){
+    public MooreState(int inputAlphabetSize){
         transitionFunction = new int[inputAlphabetSize];
         outputFunction = new int[inputAlphabetSize];
     }
@@ -22,8 +21,6 @@ public class MealyState {
     public int getOutput(int inputCharacter){
         return outputFunction[inputCharacter];
     }
-
-
 
     public boolean equals(MealyState otherState) {
         if(outputFunction.length != otherState.outputFunction.length) return false;

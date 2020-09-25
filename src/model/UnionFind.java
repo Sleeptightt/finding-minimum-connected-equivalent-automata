@@ -57,6 +57,10 @@ public class UnionFind {
     }
 
     public boolean equals(UnionFind otherUnionFind){
-
+        boolean isEqual = true;
+        for(int i = 0; i < numberOfStates; i++){
+            isEqual = (isEqual && (unionFind[i] ==otherUnionFind.unionFind[i]));
+        }
+        return isEqual;
     }
 }
