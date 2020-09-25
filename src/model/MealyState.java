@@ -23,8 +23,6 @@ public class MealyState {
         return outputFunction[inputCharacter];
     }
 
-
-
     public boolean equals(MealyState otherState) {
         if(outputFunction.length != otherState.outputFunction.length) return false;
         boolean equal = true;

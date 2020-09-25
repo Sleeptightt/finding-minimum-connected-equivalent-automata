@@ -10,7 +10,7 @@ public class PartitionAlgorithm {
 
     public PartitionAlgorithm(){}
 
-    public void MealyPartition(MealyMachine machine){
+    public ArrayList<Integer>[] MealyPartition(MealyMachine machine){
         int numberOfStates = machine.getNumberOfStates();
         partitions = new UnionFind(numberOfStates);
         MealyState[] states = machine.getStates();
@@ -20,10 +20,23 @@ public class PartitionAlgorithm {
                     partitions.join(i,j);
             }
         }
-        partition(machine);
+        return partition(machine);
     }
 
-    public ArrayList<Integer>[] partition(MealyMachine machine){
+    public ArrayList<Integer>[] MoorePartition(MooreMachine machine){
+        int numberOfStates = machine.getNumberOfStates();
+        partitions = new UnionFind(numberOfStates);
+        MooreState[] states = machine.getStates();
+        for(int i = 0; i < numberOfStates; i++){
+            for(int j = i+1; j<numberOfStates; j++){
+                if(states[i].equals(states[j]))
+                    partitions.join(i,j);
+            }
+        }
+        return partition(machine);
+    }
+
+    public ArrayList<Integer>[] partition(Machine machine){
         int numberOfStates = machine.getNumberOfStates();
         ArrayList<Integer>[] finalPartitions;
         while(true){
@@ -35,8 +48,8 @@ public class PartitionAlgorithm {
                         int inputAlphabetSize = machine.getInputAlphabetSize();
                         boolean canJoin = true;
                         for(int k = 0; k < inputAlphabetSize; k++){
-                            int firstTransition = machine.getStates()[i].getTransition(k);
-                            int secondTransition = machine.getStates()[j].getTransition(k);
+                            int firstTransition = machine.getTransitionFromState(i,k);
+                            int secondTransition = machine.getTransitionFromState(j,k);
                             if(firstTransition != secondTransition){
                                 canJoin = false;
                             }

@@ -1,6 +1,6 @@
 package model;
 
-public class MealyMachine {
+public class MealyMachine extends Machine{
 
     private int numberOfStates;
     private int inputAlphabetSize;
@@ -14,6 +14,9 @@ public class MealyMachine {
         this.outputAlphabetSize = outputAlphabetSize;
         this.initialState = initialState;
         states = new MealyState[numberOfStates];
+        for(int i = 0; i < numberOfStates; i++){
+            states[i] = new MealyState(inputAlphabetSize);
+        }
     }
 
     public void specifyState(int stateId, int[] transitions, int[] outputs){
@@ -30,6 +33,9 @@ public class MealyMachine {
         return this.states;
     }
 
+    public int getTransitionFromState(int state, int inputCharacter){
+        return states[state].getTransition(inputCharacter);
+    }
 
     public int getInputAlphabetSize() {
         return this.inputAlphabetSize;

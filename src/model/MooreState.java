@@ -15,6 +15,7 @@ public class MooreState {
     public int getTransition(int inputCharacter){
         return transitionFunction[inputCharacter];
     }
+
     public int getOutput(){
         return output;
     }
@@ -22,5 +23,9 @@ public class MooreState {
     public boolean equals(MooreState otherState) {
         boolean equal = (this.output == otherState.output);
         return equal;
+    }
+
+    public void setOutput(int output) {
+        this.output = output;
     }
 }
