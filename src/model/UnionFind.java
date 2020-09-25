@@ -55,4 +55,8 @@ public class UnionFind {
     public int getNumberOfComponents() {
         return numberOfComponents;
     }
+
+    public boolean equals(UnionFind otherUnionFind){
+
+    }
 }

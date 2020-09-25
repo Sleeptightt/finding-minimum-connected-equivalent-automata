@@ -31,15 +31,22 @@ public class PartitionAlgorithm {
                 for(int j = i+1; j<numberOfStates; j++){
                     if(lastIteration.find(i) == lastIteration.find(j)){
                         int inputAlphabetSize = machine.getInputAlphabetSize();
+                        boolean canJoin = true;
                         for(int k = 0; k < inputAlphabetSize; k++){
                             int firstTransition = machine.getStates()[i].getTransition(k);
                             int secondTransition = machine.getStates()[j].getTransition(k);
+                            if(firstTransition != secondTransition){
+                                canJoin = false;
+                            }
+                        }
+                        if(canJoin){
+                            partitions.join(i,j);
                         }
                     }
                 }
             }
 
-            if(lastIteration == partitions) {
+            if(lastIteration.equals(partitions)) {
                 break;
             }
         }
