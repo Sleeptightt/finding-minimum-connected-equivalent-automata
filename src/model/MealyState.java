@@ -1,3 +1,5 @@
+package model;
+
 public class MealyState {
 
     private int transitionFunction[];
