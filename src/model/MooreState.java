@@ -2,11 +2,11 @@ package model;
 
 public class MooreState {
     private int transitionFunction[];
-    private int outputFunction[];
+    private int output;
 
-    public MooreState(int inputAlphabetSize){
+    public MooreState(int inputAlphabetSize, int output){
         transitionFunction = new int[inputAlphabetSize];
-        outputFunction = new int[inputAlphabetSize];
+        this.output = output;
     }
 
     public void addTransition(int inputCharacter, int nextState){
@@ -15,19 +15,12 @@ public class MooreState {
     public int getTransition(int inputCharacter){
         return transitionFunction[inputCharacter];
     }
-    public void addOutput(int inputCharacter, int output){
-        outputFunction[inputCharacter] = output;
-    }
-    public int getOutput(int inputCharacter){
-        return outputFunction[inputCharacter];
+    public int getOutput(){
+        return output;
     }
 
-    public boolean equals(MealyState otherState) {
-        if(outputFunction.length != otherState.outputFunction.length) return false;
-        boolean equal = true;
-        for(int i = 0; i < outputFunction.length; i++){
-            equal = (equal && (outputFunction[i] == otherState.outputFunction[i]));
-        }
+    public boolean equals(MooreState otherState) {
+        boolean equal = (this.output == otherState.output);
         return equal;
     }
 }

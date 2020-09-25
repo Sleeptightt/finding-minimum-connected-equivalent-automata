@@ -19,18 +19,13 @@ public class MooreMachine {
     public void specifyState(int stateId, int[] transitions, int[] outputs){
         for(int i = 0; i < inputAlphabetSize; i++){
             states[stateId].addTransition(i, transitions[i]);
-            states[stateId].addOutput(i, outputs[i]);
         }
-    }
-
-    public void initializePartitionAlgorithm(){
-
     }
 
     public int getNumberOfStates(){
         return this.numberOfStates;
     }
-    public MealyState[] getStates(){
+    public MooreState[] getStates(){
         return this.states;
     }
 

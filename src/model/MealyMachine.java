@@ -23,10 +23,6 @@ public class MealyMachine {
         }
     }
 
-    public void initializePartitionAlgorithm(){
-
-    }
-
     public int getNumberOfStates(){
         return this.numberOfStates;
     }
