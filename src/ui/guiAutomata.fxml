@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.gluonhq.charm.glisten.control.BottomNavigationButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="702.0" prefWidth="1145.0" xmlns="http://javafx.com/javafx/8.0.17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MainController">
+<StackPane prefHeight="702.0" prefWidth="1145.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MainController">
    <children>
       <BorderPane>
          <top>
@@ -27,7 +27,7 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="65.0" prefWidth="779.0" style="-fx-background-color: #4285F4;">
                      <children>
-                        <Label text="Automata Equivalence" textFill="WHITE">
+                        <Label text="Minimum equivalent automata" textFill="WHITE">
                            <font>
                               <Font name="Verdana" size="50.0" />
                            </font>
@@ -40,7 +40,7 @@
          <center>
             <TabPane prefHeight="384.0" prefWidth="779.0" styleClass="jfx-hamburger-icon" stylesheets="@../CSS/dark-theme.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
               <tabs>
-                  <Tab text="REGISTER">
+                  <Tab text="Automata">
                      <content>
                         <BorderPane prefHeight="452.0" prefWidth="805.0">
                            <center>
@@ -63,10 +63,10 @@
                                                    <children>
                                                       <GridPane alignment="CENTER_RIGHT" maxHeight="-Infinity" prefHeight="205.0" prefWidth="579.0">
                                                          <columnConstraints>
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="231.0" minWidth="10.0" prefWidth="143.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="231.0" minWidth="10.0" prefWidth="121.0" />
                                                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.66665649414062" minWidth="10.0" prefWidth="165.0" />
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="126.0" />
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="143.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="134.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="159.0" />
                                                          </columnConstraints>
                                                          <rowConstraints>
                                                             <RowConstraints maxHeight="131.0" minHeight="10.0" prefHeight="129.0" vgrow="SOMETIMES" />
@@ -102,7 +102,7 @@
                                                             <VBox alignment="TOP_CENTER" prefHeight="61.0" prefWidth="229.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                                <children>
                                                                   <Label text="Example = { A, B, C, D, . . . ,}" />
-                                                                  <TextField fx:id="states" />
+                                                                  <TextField fx:id="statesField" />
                                                                </children>
                                                             </VBox>
                                                             <VBox alignment="TOP_CENTER" prefHeight="112.0" prefWidth="128.0" GridPane.columnIndex="1">
@@ -121,7 +121,7 @@
                                                                   <TextField fx:id="outputAlphabet" />
                                                                </children>
                                                             </VBox>
-                                                            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                            <ComboBox fx:id="typeAutomata" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                             <Label text="Type of automata" GridPane.rowIndex="2">
                                                                <font>
                                                                   <Font name="Verdana" size="14.0" />
@@ -133,7 +133,7 @@
                                                 </HBox>
                                                 <HBox alignment="CENTER" prefHeight="39.0" prefWidth="534.0">
                                                    <children>
-                                                      <Button mnemonicParsing="false" onAction="#fillTable" text="Fill Table Automata" translateX="40.0">
+                                                      <Button mnemonicParsing="false" onAction="#generateTable" text="Generate table of automata" translateX="40.0">
                                                          <font>
                                                             <Font size="14.0" />
                                                          </font>
@@ -154,12 +154,12 @@
                                                       <Font name="Consolas Bold" size="24.0" />
                                                    </font>
                                                 </Label>
-                                                <TableView fx:id="tableAutomata" prefHeight="476.0" prefWidth="456.0">
-                                                  <columns>
-                                                    <TableColumn prefWidth="75.0" />
-                                                    <TableColumn prefWidth="75.0" />
-                                                  </columns>
-                                                </TableView>
+                                                <ScrollPane fx:id="scrollTable" pannable="true" prefHeight="408.0" prefWidth="446.0">
+                                                   <opaqueInsets>
+                                                      <Insets />
+                                                   </opaqueInsets>
+                                                </ScrollPane>
+                                                <BottomNavigationButton onAction="#find_automata" prefHeight="25.0" prefWidth="235.0" text="find minimum equivalent automata" />
                                              </children>
                                           </VBox>
                                        </children>
