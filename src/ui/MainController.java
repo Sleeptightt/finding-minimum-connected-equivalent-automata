@@ -32,7 +32,7 @@ public class MainController {
 
     @FXML
     private void initialize() {
-    	typeAutomata.getItems().addAll("Mealy", "Moore");
+    	
     }
     @FXML
     void fillTable(ActionEvent event) {

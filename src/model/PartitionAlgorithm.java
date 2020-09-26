@@ -50,7 +50,7 @@ public class PartitionAlgorithm {
                         for(int k = 0; k < inputAlphabetSize; k++){
                             int firstTransition = machine.getTransitionFromState(i,k);
                             int secondTransition = machine.getTransitionFromState(j,k);
-                            if(firstTransition != secondTransition){
+                            if(lastIteration.find(firstTransition) != lastIteration.find(secondTransition)){
                                 canJoin = false;
                             }
                         }
@@ -65,8 +65,9 @@ public class PartitionAlgorithm {
                 break;
             }
         }
-
         finalPartitions = new ArrayList[partitions.getNumberOfComponents()];
+        for(int i = 0; i < partitions.getNumberOfComponents(); i++)
+            finalPartitions[i] = new ArrayList<>();
         Map<Integer, Integer> indexMapping = new HashMap<>();
         int currIndex = 0;
         for(int i = 0; i < numberOfStates; i++){
