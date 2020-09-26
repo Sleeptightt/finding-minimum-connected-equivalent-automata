@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane prefHeight="702.0" prefWidth="1145.0" xmlns="http://javafx.com/javafx/8.0.17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MainController">
+   <children>
+      <BorderPane>
+         <top>
+            <VBox BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="65.0" prefWidth="779.0" style="-fx-background-color: #4285F4;">
+                     <children>
+                        <Label text="Automata Equivalence" textFill="WHITE">
+                           <font>
+                              <Font name="Verdana" size="50.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </top>
+         <center>
+            <TabPane prefHeight="384.0" prefWidth="779.0" styleClass="jfx-hamburger-icon" stylesheets="@../CSS/dark-theme.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+              <tabs>
+                  <Tab text="REGISTER">
+                     <content>
+                        <BorderPane prefHeight="452.0" prefWidth="805.0">
+                           <center>
+                              <HBox BorderPane.alignment="CENTER">
+                                 <children>
+                                    <VBox fillWidth="false" focusTraversable="true" prefHeight="563.0" prefWidth="702.0">
+                                       <children>
+                                          <Separator prefHeight="17.0" prefWidth="364.0" visible="false" />
+                                          <VBox alignment="CENTER" fillWidth="false" prefHeight="535.0" prefWidth="599.0" spacing="10.0" style="-fx-border-color: #4285F4; -fx-border-width: 2; -fx-border-radius: 15;">
+                                             <children>
+                                                <Label text="Specify Automata">
+                                                   <font>
+                                                      <Font name="Consolas Bold" size="24.0" />
+                                                   </font>
+                                                </Label>
+                                                <HBox alignment="CENTER" focusTraversable="true" prefHeight="268.0" prefWidth="619.0" spacing="8.0">
+                                                   <padding>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </padding>
+                                                   <children>
+                                                      <GridPane alignment="CENTER_RIGHT" maxHeight="-Infinity" prefHeight="205.0" prefWidth="579.0">
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="231.0" minWidth="10.0" prefWidth="143.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.66665649414062" minWidth="10.0" prefWidth="165.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="126.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="143.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints maxHeight="131.0" minHeight="10.0" prefHeight="129.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="182.0" minHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="182.0" minHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <Label text="Input Alphabet">
+                                                               <font>
+                                                                  <Font name="Verdana" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label prefHeight="18.0" prefWidth="130.0" text="  Output Alphabet" GridPane.columnIndex="2">
+                                                               <font>
+                                                                  <Font name="Verdana" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label text="  Initial State" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                               <font>
+                                                                  <Font name="Verdana" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label text="States" GridPane.rowIndex="1">
+                                                               <font>
+                                                                  <Font name="Verdana" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <TextField fx:id="initialState" prefHeight="37.0" prefWidth="93.0" style="-fx-background-color: white; -fx-text-fill: black;" styleClass="context-menu" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                                               <font>
+                                                                  <Font size="5.0" />
+                                                               </font>
+                                                            </TextField>
+                                                            <VBox alignment="TOP_CENTER" prefHeight="61.0" prefWidth="229.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                               <children>
+                                                                  <Label text="Example = { A, B, C, D, . . . ,}" />
+                                                                  <TextField fx:id="states" />
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox alignment="TOP_CENTER" prefHeight="112.0" prefWidth="128.0" GridPane.columnIndex="1">
+                                                               <children>
+                                                                  <Separator orientation="VERTICAL" prefHeight="19.0" prefWidth="11.0" />
+                                                                  <Label text="Example = { A, B, C, D, . . . ,}" />
+                                                                  <Separator orientation="VERTICAL" prefHeight="13.0" prefWidth="10.0" />
+                                                                  <TextField fx:id="inputAlphabet" />
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox alignment="TOP_CENTER" prefHeight="112.0" prefWidth="118.0" GridPane.columnIndex="3">
+                                                               <children>
+                                                                  <Separator orientation="VERTICAL" prefHeight="21.0" prefWidth="10.0" />
+                                                                  <Label text="Example = { A, B, C, D, . . . ,}" />
+                                                                  <Separator orientation="VERTICAL" prefHeight="6.0" prefWidth="14.0" />
+                                                                  <TextField fx:id="outputAlphabet" />
+                                                               </children>
+                                                            </VBox>
+                                                            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                            <Label text="Type of automata" GridPane.rowIndex="2">
+                                                               <font>
+                                                                  <Font name="Verdana" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER" prefHeight="39.0" prefWidth="534.0">
+                                                   <children>
+                                                      <Button mnemonicParsing="false" onAction="#fillTable" text="Fill Table Automata" translateX="40.0">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                      </Button>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </VBox>
+                                    <VBox fillWidth="false" focusTraversable="true" prefHeight="563.0" prefWidth="611.0">
+                                       <children>
+                                          <Separator prefHeight="17.0" prefWidth="364.0" visible="false" />
+                                          <VBox alignment="CENTER" fillWidth="false" prefHeight="535.0" prefWidth="532.0" spacing="10.0" style="-fx-border-color: #4285F4; -fx-border-width: 2; -fx-border-radius: 15;">
+                                             <children>
+                                                <Label text="Table Automata">
+                                                   <font>
+                                                      <Font name="Consolas Bold" size="24.0" />
+                                                   </font>
+                                                </Label>
+                                                <TableView fx:id="tableAutomata" prefHeight="476.0" prefWidth="456.0">
+                                                  <columns>
+                                                    <TableColumn prefWidth="75.0" />
+                                                    <TableColumn prefWidth="75.0" />
+                                                  </columns>
+                                                </TableView>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </center>
+                           <left>
+                              <Separator prefHeight="143.0" prefWidth="8.0" BorderPane.alignment="CENTER" />
+                           </left>
+                           <right>
+                              <Separator prefHeight="71.0" prefWidth="12.0" BorderPane.alignment="CENTER" />
+                           </right>
+                        </BorderPane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </center>
+      </BorderPane>
+   </children>
+</StackPane>
