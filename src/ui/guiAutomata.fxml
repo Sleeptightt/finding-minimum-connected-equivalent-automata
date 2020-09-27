@@ -91,9 +91,9 @@
                                                                         <Font name="Verdana" size="14.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <Separator orientation="VERTICAL" prefHeight="21.0" prefWidth="12.0" />
+                                                                  <Separator orientation="VERTICAL" prefHeight="21.0" prefWidth="12.0" visible="false" />
                                                                   <Label text="Example =  A, B, C, D , . . . , n" />
-                                                                  <Separator orientation="VERTICAL" prefHeight="13.0" prefWidth="10.0" />
+                                                                  <Separator orientation="VERTICAL" prefHeight="13.0" prefWidth="10.0" visible="false" />
                                                                   <TextField fx:id="inputAlphabet" />
                                                                </children>
                                                             </VBox>
@@ -104,21 +104,21 @@
                                                                         <Font name="Verdana" size="14.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <Separator orientation="VERTICAL" prefHeight="22.0" prefWidth="14.0" />
+                                                                  <Separator orientation="VERTICAL" prefHeight="22.0" prefWidth="14.0" visible="false" />
                                                                   <Label text="Example =  A, B, C, D , . . . , n" />
-                                                                  <Separator orientation="VERTICAL" prefHeight="12.0" prefWidth="18.0" />
+                                                                  <Separator orientation="VERTICAL" prefHeight="12.0" prefWidth="18.0" visible="false" />
                                                                   <TextField fx:id="outputAlphabet" />
                                                                </children>
                                                             </VBox>
                                                             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
                                                                <children>
-                                                                  <Separator orientation="VERTICAL" prefHeight="10.0" prefWidth="10.0" />
+                                                                  <Separator orientation="VERTICAL" prefHeight="10.0" prefWidth="10.0" visible="false" />
                                                                   <Label text="Type of automata">
                                                                      <font>
                                                                         <Font name="Verdana" size="14.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <Separator orientation="VERTICAL" prefHeight="4.0" prefWidth="6.0" />
+                                                                  <Separator orientation="VERTICAL" prefHeight="4.0" prefWidth="6.0" visible="false" />
                                                                   <ComboBox fx:id="typeAutomata" prefWidth="150.0" />
                                                                </children>
                                                             </VBox>
@@ -129,7 +129,7 @@
                                                                         <Font name="Verdana" size="14.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <Separator orientation="VERTICAL" prefHeight="14.0" prefWidth="19.0" />
+                                                                  <Separator orientation="VERTICAL" prefHeight="14.0" prefWidth="19.0" visible="false" />
                                                                   <TextField fx:id="initialState" prefHeight="28.0" prefWidth="185.0" style="-fx-background-color: white; -fx-text-fill: black;" styleClass="context-menu" />
                                                                </children>
                                                             </VBox>
@@ -162,9 +162,17 @@
                                                 </Label>
                                                 <HBox prefHeight="57.0" prefWidth="421.0">
                                                    <children>
-                                                      <Label prefHeight="17.0" prefWidth="99.0" text="Automata M" />
-                                                      <Separator prefHeight="25.0" prefWidth="231.0" />
-                                                      <Label prefHeight="17.0" prefWidth="113.0" text="Automata M'" />
+                                                      <Label prefHeight="17.0" prefWidth="99.0" text="Automata M">
+                                                         <font>
+                                                            <Font name="System Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Separator prefHeight="25.0" prefWidth="231.0" visible="false" />
+                                                      <Label prefHeight="17.0" prefWidth="113.0" text="Automata M'">
+                                                         <font>
+                                                            <Font name="System Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
                                                    </children>
                                                 </HBox>
                                                 <HBox prefHeight="260.0" prefWidth="664.0">
@@ -179,14 +187,18 @@
                                                 </HBox>
                                                 <HBox alignment="CENTER" prefHeight="10.0" prefWidth="197.0">
                                                    <children>
-                                                      <Label text="PARTITIONS" />
+                                                      <Label text="Partitions">
+                                                         <font>
+                                                            <Font name="System Bold" size="14.0" />
+                                                         </font>
+                                                      </Label>
                                                    </children>
                                                 </HBox>
                                                 <ScrollPane prefHeight="198.0" prefWidth="534.0">
                                                    <content>
                                                       <HBox alignment="CENTER" prefHeight="145.0" prefWidth="519.0">
                                                          <children>
-                                                            <Separator prefHeight="71.0" prefWidth="96.0" />
+                                                            <Separator prefHeight="71.0" prefWidth="96.0" visible="false" />
                                                             <Label fx:id="partitions" prefHeight="135.0" prefWidth="345.0" />
                                                          </children>
                                                       </HBox>

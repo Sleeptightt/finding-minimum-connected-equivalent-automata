@@ -58,6 +58,7 @@ public class Main extends Application {
 
         transitions[0] = 7; transitions[1] = 3; outputs[0] = 1; outputs[1] = 0;
         machine.specifyState(8,transitions,outputs);
+        
         if(machine == null)System.out.println("HOLA");
         PartitionAlgorithm algo = new PartitionAlgorithm();
         ArrayList<Integer>[] end = algo.MealyPartition(machine);

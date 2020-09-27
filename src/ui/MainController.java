@@ -80,7 +80,7 @@ public class MainController {
      * If it is a Moore automata then the table has an additional column at the end to specify the output of each state.
      * 
      * @param event, the click on the button
-     * <b>post:</b>  the list of the matrices of the object board has been modified
+     * <b>post:</b>  the automata from the model has been created
      */
     
     
@@ -115,7 +115,15 @@ public class MainController {
     		}
     		
     }
-    
+    /**
+     * <b>Description:</b>
+     * This method solve the model specifically the partition algorithm. 
+     * From this method the method that shows the minimum equivalent automata and the one that shows the final partitions is called.
+     * 
+     * <b>Pre:</b> the mealy or moore automata must not be null, it should have already been initialized in the generateTable method
+     * @param event, the click on the button
+     * <b>post:</b>  an object of type PartitionAlgorithm has been created to make the partitioning algorithm
+     */
     
     @FXML
     void find_automata(ActionEvent event) {
@@ -142,6 +150,14 @@ public class MainController {
     	}
     	
     }
+    /**
+     * <b>Description:</b>
+     * This method shows the final partitions generated in the partitioning algorithm
+     * 
+     * <b>Pre:</b> the model's partitioning algorithm must be solved
+     * @param end, are the final partitions
+     */
+    
     public void showPartitions(ArrayList<Integer>[] end) {
     	 String ans = "";                               
 	     for(int i=0; i<end.length;i++) {
@@ -157,7 +173,16 @@ public class MainController {
 	     }
 	     partitions.setText(ans);
     }
-    public void fillAutomata(String type) {    /// este método carga los datos de la tabla y los manda al modelo pa que llene el automata
+    /**
+     * <b>Description:</b>
+     * this method loads the data entered by the user in the automata table and sends it to the model so that each -
+     * class (MooreMachine or MealyMachine) fills the automata (assign transitions and outputs).
+     * 
+     * @param type, type of automaton to be filled
+     * <b>post:</b> the model's automata (mealy or moore) was assigned the transitions and outputs
+     */
+    
+    public void fillAutomata(String type) {  
     	String[][] dataModel = new String[data.length][data[0].length];
     	
     	for(int i=0; i<data.length;i++) {
@@ -166,11 +191,12 @@ public class MainController {
     				if(type.equals("Mealy")) {
     					
     					String[] value = data[i][j].getText().split(",");
-	    				dataModel[i][j]=""+i+","+j+","+statesMap.get(value[0])+","+outputMap.get(value[1]);   /// state,symbol,next state, output  -->  a,0,b,1
+	    				dataModel[i][j]=""+i+","+j+","+statesMap.get(value[0])+","+outputMap.get(value[1]);   /// dataModel[i][j] = state,symbol,next state, output  -->  a,0,b,1
     				}
     				else if(type.equals("Moore") && j<data[0].length-1) {
-    					dataModel[i][j]=""+i+","+j+","+statesMap.get(data[i][j].getText()) +","+ data[i][data[0].length-1].getText();   /// state,symbol,next state,   -->  a,0,b
-    					System.out.println("data model:  " + dataModel[i][j]);
+    					
+    					dataModel[i][j]=""+i+","+j+","+statesMap.get(data[i][j].getText()) +","+ data[i][data[0].length-1].getText();   /// state,symbol,next state,output   -->  a,0,b,1
+    					
     				}
     			}
     		}
@@ -183,59 +209,77 @@ public class MainController {
     	}
     	
     }
+    /**
+     * <b>Description:</b>
+     * this method displays the equivalent minimum moore automaton table that was found with the partitioning algorithm
+     * 
+     * <b>Pre: </b> The partitioning algorithm should have already been performed
+     * @param end, are the final partitions
+     * @param input, the automata input symbols
+     * @param automata, moore's automaton model
+     */
     
-public void showMinimunMooreAutomata(List<Integer>[] end, String[] input, Machine automata) {
+    public void showMinimunMooreAutomata(List<Integer>[] end, String[] input, MooreMachine automata) {
     	
-    	Map<Integer,String> map = new HashMap<>();
-    	for(int i=0; i<end.length;i++) {
-    		map.put(i,"q"+i);
-    	}
-    	 int length = end.length;
-  	   int width = input.length;
-  	 paneB.getChildren().clear();
-  	   for(int y = 0; y < length+1; y++)
-  	   {
-  		   for(int x = 0; x < width+2; x++)
-  		   {	
-  			 if(x==0 && y==0) {
-	        		Button a = new Button("States"); 
-	        		a.setPrefWidth(50);
-	        		paneB.add(a, x,y);
-	        	}else if(x==width+1 && y==0) {
-	        		Button a = new Button("Output"); 
-	        		a.setPrefWidth(70);
-	        		paneB.add(a, x,y);
-	        	}
-	        	else if(x==0 && y>0) {
-	        		Button a = new Button("q"+(y-1)); 
-	        		a.setPrefWidth(50);
-	        		paneB.add(a, x,y);
-	        	}else if(y==0 && x>0) {
-	        		Button symbol = new Button(input[x-1]); 
-	        		symbol.setPrefWidth(50);
-	        		paneB.add(symbol, x,y);
-	        	}else {
-	        		if(x==width+1) {
-	        			String output = routputMap.get( automata.getOutputFromState(end[y-1].get(0)));
-	  	        		TextField a = new TextField(output);
-	  	        		a.setPrefWidth(50);
-	  	        		paneB.add(a, x,y);
-	        		}else {
-	  	        		int nextState = automata.getTransitionFromState(end[y-1].get(0), x-1);
-	  	        		int stateq = findStateq(end,nextState,automata);
-	  	        		TextField a = new TextField(map.get(stateq));
-	  	        		a.setPrefWidth(50);
-	  	        		paneB.add(a, x,y);
-	        		}
-  	        	}
-  		   }
-  	   }   
-  	   
-  		endAutomataScroll.setContent(paneB);
-    }
+	    Map<Integer,String> map = new HashMap<>();
+	    for(int i=0; i<end.length;i++) {
+	    	map.put(i,"q"+i);
+	    }
+	    int length = end.length;
+	  	int width = input.length;
+	  	 paneB.getChildren().clear();
+	  	   for(int y = 0; y < length+1; y++)
+	  	   {
+	  		   for(int x = 0; x < width+2; x++)
+	  		   {	
+	  			 if(x==0 && y==0) {
+		        		Button a = new Button("States"); 
+		        		a.setPrefWidth(50);
+		        		paneB.add(a, x,y);
+		        	}else if(x==width+1 && y==0) {
+		        		Button a = new Button("Output"); 
+		        		a.setPrefWidth(70);
+		        		paneB.add(a, x,y);
+		        	}
+		        	else if(x==0 && y>0) {
+		        		Button a = new Button("q"+(y-1)); 
+		        		a.setPrefWidth(50);
+		        		paneB.add(a, x,y);
+		        	}else if(y==0 && x>0) {
+		        		Button symbol = new Button(input[x-1]); 
+		        		symbol.setPrefWidth(50);
+		        		paneB.add(symbol, x,y);
+		        	}else {
+		        		if(x==width+1) {
+		        			String output = routputMap.get( automata.getOutputFromState(end[y-1].get(0)));
+		  	        		TextField a = new TextField(output);
+		  	        		a.setPrefWidth(50);
+		  	        		paneB.add(a, x,y);
+		        		}else {
+		  	        		int nextState = automata.getTransitionFromState(end[y-1].get(0), x-1);
+		  	        		int stateq = findStateq(end,nextState,automata);
+		  	        		TextField a = new TextField(map.get(stateq));
+		  	        		a.setPrefWidth(50);
+		  	        		paneB.add(a, x,y);
+		        		}
+	  	        	}
+	  		   }
+	  	   }   
+	  	   
+	  		endAutomataScroll.setContent(paneB);
+	    }
     
-   
-    public void showMinimunMealyAutomata(List<Integer>[] end, String[] input, Machine automata) {
+    /**
+     * <b>Description:</b>
+     * this method displays the equivalent minimum mealy automaton table that was found with the partitioning algorithm
+     * 
+     * <b>Pre: </b> The partitioning algorithm should have already been performed
+     * @param end, are the final partitions
+     * @param input, the automata input symbols
+     * @param automata, mealy's automaton model
+     */
+    
+    public void showMinimunMealyAutomata(List<Integer>[] end, String[] input, MealyMachine automata) {
     	
     	Map<Integer,String> map = new HashMap<>();
     	for(int i=0; i<end.length;i++) {
@@ -276,14 +320,24 @@ public void showMinimunMooreAutomata(List<Integer>[] end, String[] input, Machin
   		endAutomataScroll.setContent(paneB);
     }
     
- // este metodo encuentra el estado q al que pertenece el estado u de la siguiente transicion:   v --> u 
+    /**
+     * <b>Description:</b>
+     * this method finds to which new state qi belongs a state of the original automata
+     * 
+     * <b>Pre: </b> The partitioning algorithm should have already been performed
+     * @param end, are the final partitions
+     * @param state, state from the original automata
+     * @param automata, the original automata
+     * 
+     * @return the position in the list end of the new state qi to which the state of the original automata belongs
+     */
     
-    public int findStateq(List<Integer>[] end, int nextState, Machine automata) {    
+    public int findStateq(List<Integer>[] end, int state, Machine automata) {    
     	int stateq = 0;
     	boolean exit=false;
     	 for(int i=0; i<end.length && !exit;i++) {
 	    	 for(int j=0; j<end[i].size() && !exit; j++) {
-	    		if(end[i].get(j)==nextState) {
+	    		if(end[i].get(j)==state) {
 	    			stateq=i;
 	    			exit= true;
 	    		}
@@ -294,6 +348,13 @@ public void showMinimunMooreAutomata(List<Integer>[] end, String[] input, Machin
 	     return stateq;
     }
     
+    /**
+     * <b>Description:</b>
+     * this method allows displaying the empty table of a mealy automaton for the user to enter the transitions and outputs
+     * 
+     * @param input, the automata input symbols
+     * @param states, states from the original automata
+    */
    public void generateMealyTable(String[] input, String[] states) {
 	   int length = states.length;
 	   int width = input.length;
@@ -326,6 +387,14 @@ public void showMinimunMooreAutomata(List<Integer>[] end, String[] input, Machin
 	   
 		scrollTable.setContent(root);
    }
+   
+   /**
+    * <b>Description:</b>
+    * this method allows displaying the empty table of a moore automaton for the user to enter the transitions and outputs
+    * 
+    * @param input, the automata input symbols
+    * @param states, states from the original automata
+   */
 
    public void generateMooreTable(String[] input, String[] states) {
 	   int length = states.length;
