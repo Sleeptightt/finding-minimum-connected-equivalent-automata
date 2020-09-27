@@ -17,6 +17,11 @@ import model.MealyMachine;
 import model.MooreMachine;
 import model.PartitionAlgorithm;
 
+
+/**
+* This class defines the necessary attributes and methods to show and control the GUI Automata.
+*/
+
 public class MainController {
 
     @FXML
@@ -46,6 +51,7 @@ public class MainController {
     private MealyMachine mealy;
     private MooreMachine moore;
     
+    // we treat states and symbols as integers. So these maps allow to pass a state or a symbol from integer to string and vice versa
     Map<String,Integer> statesMap;
     Map<Integer,String> rstatesMap;
     Map<String,Integer> outputMap;
@@ -65,6 +71,19 @@ public class MainController {
     	 outputMap = new HashMap<>();
     	 routputMap = new HashMap<>();
     }
+    
+
+    /**
+     * <b>Description:</b>
+     * This method allows to generate and displays an automata table for the user to enter the automata data.
+     * In this method the model's state machine is created depending on whether it is a Mealy or Moore automata
+     * If it is a Moore automata then the table has an additional column at the end to specify the output of each state.
+     * 
+     * @param event, the click on the button
+     * <b>post:</b>  the list of the matrices of the object board has been modified
+     */
+    
+    
     @FXML
     void generateTable(ActionEvent event) {
     		String[] states = statesField.getText().split(",");
@@ -81,7 +100,8 @@ public class MainController {
     			outputMap.put(output[i],i);
     			routputMap.put(i,output[i]);
     		}
-    		
+    		paneB.getChildren().clear();
+    		partitions.setText("");
     		if(type.equals("Mealy")) {
     			data = new TextField[states.length][input.length];
     			generateMealyTable(input,states);
@@ -102,52 +122,41 @@ public class MainController {
     	String type = typeAutomata.getValue();
     	if(type.equals("Mealy")){
     		
-    		fillAutomata("Mealy");                     // primero llena el automata en el modelo
+    		fillAutomata("Mealy");                     // First fill the automaton in the model
     		
     		 PartitionAlgorithm algorithm = new PartitionAlgorithm();
-    	     ArrayList<Integer>[] end = algorithm.MealyPartition(mealy);    // luego hace el algoritmo  
+    	     ArrayList<Integer>[] end = algorithm.MealyPartition(mealy);    // then do the partitioning algorithm  
     	     
-    	     showMinimunMealyAutomata(end, inputAlphabet.getText().split(","), mealy);    // finalmente muestra el automata equivalente
+    	     showMinimunMealyAutomata(end, inputAlphabet.getText().split(","), mealy);    // finally shows the equivalent automata
     	    
-    	     String ans = "";                               // esto es para mostrar los nuevos estados qi  i>=0
-    	     for(int i=0; i<end.length;i++) {
-    	    	 ans+="q"+i+" = { ";
-    	    	 for(int j=0; j<end[i].size(); j++) {
-    	    		 System.out.print(end[i].get(j)+" ");
-    	    		 if(j==end[i].size()-1)
-    	    			 ans+=rstatesMap.get(end[i].get(j))+" }";
-    	    		 else 
-    	    			 ans+=rstatesMap.get(end[i].get(j))+", ";
-    	    	 }
-    	    	 ans+="\n";
-    	    	 System.out.println();
-    	     }
-    	     partitions.setText(ans);
+    	     showPartitions(end);
+    	     
     	}else if(type.equals("Moore")) {
     		fillAutomata("Moore");   
     		
     		PartitionAlgorithm algorithm = new PartitionAlgorithm();
-    	    ArrayList<Integer>[] end = algorithm.MoorePartition(moore);    // luego hace el algoritmo  
-    	    showMinimunMooreAutomata(end, inputAlphabet.getText().split(","), moore);    // finalmente muestra el automata equivalente
+    	    ArrayList<Integer>[] end = algorithm.MoorePartition(moore);    
+    	    showMinimunMooreAutomata(end, inputAlphabet.getText().split(","), moore);   
     	    
-    	    String ans = "";                               // esto es para mostrar los nuevos estados qi  i>=0
-   	     for(int i=0; i<end.length;i++) {
-   	    	 ans+="q"+i+" = { ";
-   	    	 for(int j=0; j<end[i].size(); j++) {
-   	    		 System.out.print(end[i].get(j)+" ");
-   	    		 if(j==end[i].size()-1)
-   	    			 ans+=rstatesMap.get(end[i].get(j))+" }";
-   	    		 else 
-   	    			 ans+=rstatesMap.get(end[i].get(j))+", ";
-   	    	 }
-   	    	 ans+="\n";
-   	    	 System.out.println();
-   	     }
-   	     partitions.setText(ans);
+    	    showPartitions(end);
     	}
     	
     }
-    
+    public void showPartitions(ArrayList<Integer>[] end) {
+    	 String ans = "";                               
+	     for(int i=0; i<end.length;i++) {
+	    	 ans+="q"+i+" = { ";
+	    	 for(int j=0; j<end[i].size(); j++) {
+	    		 if(j==end[i].size()-1)
+	    			 ans+=rstatesMap.get(end[i].get(j))+" }";
+	    		 else 
+	    			 ans+=rstatesMap.get(end[i].get(j))+", ";
+	    	 }
+	    	 ans+="\n";
+	    	 
+	     }
+	     partitions.setText(ans);
+    }
     public void fillAutomata(String type) {    /// este método carga los datos de la tabla y los manda al modelo pa que llene el automata
     	String[][] dataModel = new String[data.length][data[0].length];
     	
@@ -159,8 +168,9 @@ public class MainController {
     					String[] value = data[i][j].getText().split(",");
 	    				dataModel[i][j]=""+i+","+j+","+statesMap.get(value[0])+","+outputMap.get(value[1]);   /// state,symbol,next state, output  -->  a,0,b,1
     				}
-    				else if(type.equals("Moore")) {
+    				else if(type.equals("Moore") && j<data[0].length-1) {
     					dataModel[i][j]=""+i+","+j+","+statesMap.get(data[i][j].getText()) +","+ data[i][data[0].length-1].getText();   /// state,symbol,next state,   -->  a,0,b
+    					System.out.println("data model:  " + dataModel[i][j]);
     				}
     			}
     		}
@@ -189,32 +199,32 @@ public void showMinimunMooreAutomata(List<Integer>[] end, String[] input, Machin
   		   {	
   			 if(x==0 && y==0) {
 	        		Button a = new Button("States"); 
-	        		a.setPrefWidth(100);
+	        		a.setPrefWidth(50);
 	        		paneB.add(a, x,y);
 	        	}else if(x==width+1 && y==0) {
 	        		Button a = new Button("Output"); 
-	        		a.setPrefWidth(100);
+	        		a.setPrefWidth(70);
 	        		paneB.add(a, x,y);
 	        	}
 	        	else if(x==0 && y>0) {
 	        		Button a = new Button("q"+(y-1)); 
-	        		a.setPrefWidth(100);
+	        		a.setPrefWidth(50);
 	        		paneB.add(a, x,y);
 	        	}else if(y==0 && x>0) {
 	        		Button symbol = new Button(input[x-1]); 
-	        		symbol.setPrefWidth(100);
+	        		symbol.setPrefWidth(50);
 	        		paneB.add(symbol, x,y);
 	        	}else {
 	        		if(x==width+1) {
-	        			String output = routputMap.get(automata.getOutputFromState(end[y-1].get(0),0));
+	        			String output = routputMap.get( automata.getOutputFromState(end[y-1].get(0)));
 	  	        		TextField a = new TextField(output);
-	  	        		a.setPrefWidth(100);
+	  	        		a.setPrefWidth(50);
 	  	        		paneB.add(a, x,y);
 	        		}else {
 	  	        		int nextState = automata.getTransitionFromState(end[y-1].get(0), x-1);
 	  	        		int stateq = findStateq(end,nextState,automata);
 	  	        		TextField a = new TextField(map.get(stateq));
-	  	        		a.setPrefWidth(100);
+	  	        		a.setPrefWidth(50);
 	  	        		paneB.add(a, x,y);
 	        		}
   	        	}
@@ -241,23 +251,23 @@ public void showMinimunMooreAutomata(List<Integer>[] end, String[] input, Machin
   		   {	
   	        	if(x==0 && y==0) {
   	        		Button a = new Button("states"); 
-  	        		a.setPrefWidth(100);
+  	        		a.setPrefWidth(50);
   	        		paneB.add(a, x,y);
   	        	}
   	        	else if(x==0 && y>0) {
   	        		Button a = new Button("q"+(y-1)); 
-  	        		a.setPrefWidth(100);
+  	        		a.setPrefWidth(50);
   	        		paneB.add(a, x,y);
   	        	}else if(y==0 && x>0) {
   	        		Button symbol = new Button(input[x-1]); 
-  	        		symbol.setPrefWidth(100);
+  	        		symbol.setPrefWidth(50);
   	        		paneB.add(symbol, x,y);
   	        	}else {
   	        		int nextState = automata.getTransitionFromState(end[y-1].get(0), x-1);
   	        		int stateq = findStateq(end,nextState,automata);
   	        		String output = routputMap.get(automata.getOutputFromState(end[y-1].get(0), x-1));
   	        		TextField a = new TextField(map.get(stateq)+","+output);
-  	        		a.setPrefWidth(100);
+  	        		a.setPrefWidth(50);
   	        		paneB.add(a, x,y);
   	        	}
   		   }
@@ -294,20 +304,20 @@ public void showMinimunMooreAutomata(List<Integer>[] end, String[] input, Machin
 		   {	
 	        	if(x==0 && y==0) {
 	        		Button a = new Button("states"); 
-	        		a.setPrefWidth(100);
+	        		a.setPrefWidth(50);
 	                root.add(a, x,y);
 	        	}
 	        	else if(x==0 && y>0) {
 	        		Button a = new Button(states[y-1]); 
-	        		a.setPrefWidth(100);
+	        		a.setPrefWidth(50);
 	                root.add(a, x,y);
 	        	}else if(y==0 && x>0) {
 	        		Button symbol = new Button(input[x-1]); 
-	        		symbol.setPrefWidth(100);
+	        		symbol.setPrefWidth(50);
 	                root.add(symbol, x,y);
 	        	}else {
 	        		TextField a = new TextField("");
-	        		a.setPrefWidth(100);
+	        		a.setPrefWidth(50);
 	        		data[y-1][x-1] = a;
 	        		root.add(a, x,y);
 	        	}
@@ -327,24 +337,24 @@ public void showMinimunMooreAutomata(List<Integer>[] end, String[] input, Machin
 		   {	
 	        	if(x==0 && y==0) {
 	        		Button a = new Button("States"); 
-	        		a.setPrefWidth(100);
+	        		a.setPrefWidth(50);
 	                root.add(a, x,y);
 	        	}else if(x==width+1 && y==0) {
 	        		Button a = new Button("Output"); 
-	        		a.setPrefWidth(100);
+	        		a.setPrefWidth(70);
 	                root.add(a, x,y);
 	        	}
 	        	else if(x==0 && y>0) {
 	        		Button a = new Button(states[y-1]); 
-	        		a.setPrefWidth(100);
+	        		a.setPrefWidth(50);
 	                root.add(a, x,y);
 	        	}else if(y==0 && x>0) {
 	        		Button symbol = new Button(input[x-1]); 
-	        		symbol.setPrefWidth(100);
+	        		symbol.setPrefWidth(50);
 	                root.add(symbol, x,y);
 	        	}else {
 	        		TextField a = new TextField("");
-	        		a.setPrefWidth(100);
+	        		a.setPrefWidth(50);
 	        		data[y-1][x-1] = a;
 	        		root.add(a, x,y);
 	        	}

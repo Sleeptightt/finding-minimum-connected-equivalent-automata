@@ -31,7 +31,7 @@ public class MooreMachine extends Machine{
     		int[] transitions = new int[data[0].length];
         	int state=0;
         	int output=0;
-    		for(int j=0;j<data[0].length; j++) {
+    		for(int j=0;j<data[0].length-1; j++) {
     			String[] value = data[i][j].split(",");
     			state = Integer.parseInt(value[0]);
     			int symbol = Integer.parseInt(value[1]);

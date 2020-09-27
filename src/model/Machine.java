@@ -16,4 +16,7 @@ public class Machine {
     public int getOutputFromState(int state, int inputCharacter){
         return 0;
     }
+    public int getOutputFromState(int state){
+        return 0;
+    }
 }
