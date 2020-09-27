@@ -25,6 +25,25 @@ public class MooreMachine extends Machine{
             states[stateId].addTransition(i, transitions[i]);
         }
     }
+    
+    public void fillMooreAutomata(String[][] data) {
+    	for(int i=0;i<data.length;i++) {
+    		int[] transitions = new int[data[0].length];
+        	int state=0;
+        	int output=0;
+    		for(int j=0;j<data[0].length; j++) {
+    			String[] value = data[i][j].split(",");
+    			state = Integer.parseInt(value[0]);
+    			int symbol = Integer.parseInt(value[1]);
+    			int nextState = Integer.parseInt(value[2]);
+    			output = Integer.parseInt(value[3]);
+    			
+    			transitions[symbol] = nextState;
+    		}
+    		specifyState(state,transitions,output);
+    	}
+    	
+    }
 
     public int getNumberOfStates(){
         return this.numberOfStates;
@@ -32,7 +51,12 @@ public class MooreMachine extends Machine{
     public MooreState[] getStates(){
         return this.states;
     }
-
+    public int getTransitionFromState(int state, int inputCharacter){
+        return states[state].getTransition(inputCharacter);
+    }
+    public int getOutputFromState(int state){
+        return states[state].getOutput();
+    }
 
     public int getInputAlphabetSize() {
         return this.inputAlphabetSize;

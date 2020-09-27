@@ -29,7 +29,6 @@ public class MealyMachine extends Machine{
     }
     
     public void fillMealyAutomata(String[][] data) {
-    	System.out.println(data.length + " " + data[0].length);
     	for(int i=0;i<data.length;i++) {
     		int[] transitions = new int[data[0].length];
         	int[] outputs = new int[data[0].length];
