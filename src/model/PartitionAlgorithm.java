@@ -10,6 +10,13 @@ public class PartitionAlgorithm {
 
     public PartitionAlgorithm(){}
 
+    /**
+     * <b>Description:</b>
+     * This function is responsible of initializing the partitioning algorithm for a mealy machine
+     *
+     * <b>Pre:</b> the mealy or moore automata must not be null, it should have already been initialized.
+     * @param machine, the machine that is to be minimized
+     */
     public ArrayList<Integer>[] MealyPartition(MealyMachine machine){
         int numberOfStates = machine.getNumberOfStates();
         partitions = new UnionFind(numberOfStates);
@@ -23,6 +30,13 @@ public class PartitionAlgorithm {
         return partition(machine);
     }
 
+    /**
+     * <b>Description:</b>
+     * This function is responsible of initializing the partitioning algorithm for a moore machine
+     *
+     * <b>Pre:</b> the mealy or moore automata must not be null, it should have already been initialized.
+     * @param machine, the machine that is to be minimized
+     */
     public ArrayList<Integer>[] MoorePartition(MooreMachine machine){
         int numberOfStates = machine.getNumberOfStates();
         partitions = new UnionFind(numberOfStates);
@@ -36,6 +50,14 @@ public class PartitionAlgorithm {
         return partition(machine);
     }
 
+    /**
+     * <b>Description:</b>
+     * This function is responsible of partitioning the machine and finding it's minimum equivalent representation.
+     *
+     * <b>Pre:</b> the mealy or moore automata must not be null, it should have already been initialized.
+     * <b>Pos:</b> the partitions are represented in the array list.
+     * @param machine, the machine that is to be minimized
+     */
     public ArrayList<Integer>[] partition(Machine machine){
         int numberOfStates = machine.getNumberOfStates();
         ArrayList<Integer>[] finalPartitions;

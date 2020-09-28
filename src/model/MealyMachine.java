@@ -21,13 +21,29 @@ public class MealyMachine extends Machine{
         }
     }
 
+    /**
+     * <b>Description:</b>
+     * This function creates the transitions and outputs of the specified state
+     *
+     * <b>Pre:</b> the mealy or moore automata must not be null, it should have already been initialized.
+     * @param stateId, the state which is to be specified
+     * @param transitions, the transitions belonging to said state
+     * @param outputs, the outputs belonging to said state
+     */
     public void specifyState(int stateId, int[] transitions, int[] outputs){
         for(int i = 0; i < inputAlphabetSize; i++){
             states[stateId].addTransition(i, transitions[i]);
             states[stateId].addOutput(i, outputs[i]);
         }
     }
-    
+
+    /**
+     * <b>Description:</b>
+     * This function is responsible of creating the states, transitions and outputs of the already created mealy machine.
+     *
+     * <b>Pre:</b> the mealy or moore automata must not be null, it should have already been initialized.
+     * @param data, the states, transitions and outputs that the machine is going to have.
+     */
     public void fillMealyAutomata(String[][] data) {
     	for(int i=0;i<data.length;i++) {
     		int[] transitions = new int[data[0].length];

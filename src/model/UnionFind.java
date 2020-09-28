@@ -20,6 +20,12 @@ public class UnionFind {
         numberOfComponents = numberOfStates;
     }
 
+    /**
+     * <b>Description:</b>
+     * This function is responsible of finding the parent of the specified state.
+     *
+     * @param stateToFind, the state to find
+     */
     public int find(int stateToFind){
         int parent;
         if(stateToFind == unionFind[stateToFind])
@@ -29,6 +35,13 @@ public class UnionFind {
         return parent;
     }
 
+    /**
+     * <b>Description:</b>
+     * This function is responsible of joining two states into the same component
+     *
+     * @param stateA, the state to join
+     * @param stateB, the state to join
+     */
     public boolean join(int stateA, int stateB){
         stateA = unionFind[stateA];
         stateB = unionFind[stateB];
@@ -48,14 +61,27 @@ public class UnionFind {
         return canJoin;
     }
 
+    /**
+     * <b>Description:</b>
+     * This function is responsible of returning the number of states in the union find.
+     */
     public int getNumberOfStates() {
         return numberOfStates;
     }
 
+    /**
+     * <b>Description:</b>
+     * This function is responsible of returning the number of components in the union find.
+     */
     public int getNumberOfComponents() {
         return numberOfComponents;
     }
 
+    /**
+     * <b>Description:</b>
+     * This function is responsible of comparing two union finds
+     * @param otherUnionFind, the other union find to be compared.
+     */
     public boolean equals(UnionFind otherUnionFind){
         boolean isEqual = true;
         for(int i = 0; i < numberOfStates; i++){
